@@ -255,7 +255,7 @@ PYTHON/
 
 ---
 
-## 📞 Support & Next Steps
+## Next Steps
 - Docs and examples are now unified here
 - Dashboard: http://localhost:5000
 - Health: http://localhost:5000/health
@@ -269,4 +269,4 @@ python chat_moderation_system.py train
 
 ---
 
-✅ Your KRILI chat is now protected with ML-powered moderation! If you’d like, I can remove or link the original separate docs and keep this as the single source of truth.
+✅ BY LAADNANI
