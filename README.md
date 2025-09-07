@@ -1,4 +1,4 @@
-# 🛡️ KRILI Chat Moderation — Unified README
+# 🛡️ KRILI UMIFIED README
 
 A complete guide that combines the Integration Guide, Full Documentation, and System Summary into one place.
 
