@@ -11,6 +11,8 @@ import { ToastProvider, ToastViewport } from "@/components/ui/toast"
 import { NotificationProvider } from "@/components/notification-context"
 import { PageTransition } from "@/components/page-transition"
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://krili.com"
+
 export const metadata: Metadata = {
   title: {
     default: "Krili - Rent Anything, Anytime",
@@ -37,14 +39,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://krili.com"),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://krili.com",
+    url: SITE_URL,
     title: "Krili - Rent Anything, Anytime",
     description:
       "The ultimate peer-to-peer rental marketplace. Rent or list anything from tools to electronics, vehicles to equipment.",
@@ -81,13 +83,13 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
   category: "marketplace",
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export const viewport: Viewport = {
   width: "device-width",
-  initialScale: 1process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-  maximumScale: 1process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  initialScale: 1,
+  maximumScale: 1,
   userScalable: false,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#6366f1" },
@@ -100,6 +102,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const orgLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Krili",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    sameAs: [
+      "https://twitter.com/krili_app",
+      "https://facebook.com/krili",
+      "https://instagram.com/krili_app",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+1-555-KRILI",
+      contactType: "customer service",
+    },
+  }
+
   return (
     <html lang="en">
       <head>
@@ -127,26 +147,7 @@ export default function RootLayout({
         {/* Structured data for organization */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-   process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://krili.com",
-              logo: (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Krili",
-              url: process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL ||            logo: (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://krili.com") + "") + "/logo.png",
-              description: "The ultimate peer-to-peer rental marketplace",
-              sameAs: [
-                "https://twitter.com/krili_app",
-                "https://facebook.com/krili",
-                "https://instagram.com/krili_app",
-              ],
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+1-555-KRILI",
-                contactType: "customer service",
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
         />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
