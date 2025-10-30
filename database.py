@@ -43,6 +43,7 @@ class Database:
     
     def execute_query(self, query, params=None):
         """Execute a query and return results"""
+        cursor = None  # Initialize cursor to None to prevent undefined variable error
         try:
             cursor = self.get_cursor()
             if params:
@@ -59,10 +60,12 @@ class Database:
             print(f"Error executing query: {e}")
             return None
         finally:
-            cursor.close()
+            if cursor:  # Check if cursor exists before closing
+                cursor.close()
     
     def execute_query_single(self, query, params=None):
         """Execute a query and return single result"""
+        cursor = None  # Initialize cursor to None to prevent undefined variable error
         try:
             cursor = self.get_cursor()
             if params:
@@ -76,7 +79,8 @@ class Database:
             print(f"Error executing query: {e}")
             return None
         finally:
-            cursor.close()
+            if cursor:  # Check if cursor exists before closing
+                cursor.close()
 
 # Global database instance
 db = Database()
