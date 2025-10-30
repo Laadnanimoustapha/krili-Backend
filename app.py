@@ -23,8 +23,12 @@ def create_app(config_name='development'):
     CORS(app, resources={r"/api/*": {"origins": app.config['CORS_ORIGINS']}})
     jwt = JWTManager(app)
     
-    # Connect to database
-    db.connect()
+    # Connect to database with error handling
+    try:
+        db.connect()
+    except Exception as e:
+        print(f"Warning: Database connection failed: {e}")
+        # Continue anyway - routes will handle DB errors
     
     # Register blueprints
     app.register_blueprint(auth_bp)
@@ -32,6 +36,14 @@ def create_app(config_name='development'):
     app.register_blueprint(rentals_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(users_bp)
+    
+    @app.route('/', methods=['GET'])
+    def root():
+        return jsonify({
+            'success': True,
+            'message': 'Krili Backend API',
+            'version': '1.0.0'
+        }), 200
     
     # Health check endpoint
     @app.route('/api/health', methods=['GET'])
@@ -60,7 +72,10 @@ def create_app(config_name='development'):
     # Cleanup on shutdown
     @app.teardown_appcontext
     def shutdown_session(exception=None):
-        db.disconnect()
+        try:
+            db.disconnect()
+        except:
+            pass
     
     return app
 
